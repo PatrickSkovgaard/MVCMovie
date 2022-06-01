@@ -1,0 +1,60 @@
+@model MvcMovie.Models.Movie
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Movie</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+
+       <!--     <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+-->
+            <div class="form-group">
+                <label asp-for="Text" class="control-label"></label>
+                <input asp-for="Text" class="form-control" />
+                <span asp-validation-for="Text" class="text-danger"></span>
+            </div>
+
+          <!--  <div class="form-group">
+                 <input type="submit" value="Draft" style="background-color: #bbbbbb; opacity: 85%; 
+                border-radius: 6px 6px 6px 6px; border-color: snow; height: 10vh; width: 7vw; margin-right: 15px; margin-top: 15px;"
+                 class="form-button" />
+                 
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div> -->
+
+            <div class="Option" style="display: flex; flex-direction: column; width: 7vw; margin-left: 9vw;">
+
+                <select name="saving_type" id="save_type" style="text-align: center; margin-top: 2vh;">
+                    <option value="Draft" name="DRAFT">DRAFT</option>
+                    <option value="Published" name="PUBLISHED">PUBLISH</option>
+                </select>
+
+            <div class="options-buttons" style="display: flex; flex-direction: row; margin-top: 3vh;">
+                <button type="button" value="Cancel" style="margin-left: -1vw; background-color: red;" onclick="location.replace('/movie')">Cancel</button>
+                <input type="submit" value="Save" style="margin-left: 1.5vw; background-color: #0a0;" />
+            </div>
+
+            </div> 
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

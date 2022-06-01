@@ -1,0 +1,42 @@
+@model Movie
+
+
+<div id="movie_details" style="display: flex; justify-content: center;">
+        
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Text)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreatedDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => model.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Text)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.CreatedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Status)
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+<a href="/movie" style="display:flex; justify-content: center;">Go back to movies</a>

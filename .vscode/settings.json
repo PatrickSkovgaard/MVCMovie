@@ -1,0 +1,17 @@
+{
+    "sqltools.connections": [
+        {
+            "driver": "SQLite",
+            "name": "MvcMovie",
+            "database": "${workspaceFolder:MvcMovie}/MvcMovie.db",
+            "connectionTimeout": 15
+        },
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "${workspaceFolder:MvcMovie}/MvcMovie.db",
+            "name": "DB"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}

@@ -1,0 +1,153 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+#search_form{
+  display: flex;
+  justify-content: left;
+  text-align: center;
+}
+
+#btn-create{
+  border-radius: 5%;
+  color: #fff !important;
+  background-color: #3b3;
+  margin-left: 79.8vw !important;
+  margin-top: 1px;
+  width: 90px;
+  height: 40px;
+}
+
+#create_div{
+  display: flex;
+  justify-content: right !important;
+}
+
+#btn-create:hover, #btn-create:focus{
+  background-color: #000; 
+  border-radius: 5%;
+  border-style: outset;
+  font-family: 'Times New Roman', Times, serif;
+
+} 
+
+/* Til movies container */
+.container_movies{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: solid;
+}
+
+
+
+.row-grid-row-movies{
+  border: solid 2px orchid;
+  min-width: 35vw;
+  max-width: fit-content;
+  min-height: 35vh;
+  max-height: fit-content;
+  background-color: lightslategray;
+  display: flex; 
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.movie-title {
+  font-size: 25px;
+  display: flex;
+  justify-content: flex-end; 
+  width:-moz-available;
+  margin-left: 10vw;
+}
+
+.movie-created {
+  display: flex;
+  width: -moz-available;
+  justify-content: flex-end;
+  margin-top: -3px;
+  margin-right: 3px;
+  height: fit-content;
+  color: #dff;
+  font-style: italic;
+}
+
+.movie-content {
+  font-size: 15px;
+  border: ridge 2px lightgoldenrodyellow;
+  min-width: -moz-available;
+  max-width: max-content;
+  min-height: fit-content;
+  max-height: max-content;
+  display: flex;
+  justify-content: center;
+}
+
+.movie-title, .movie-content {
+  color: white;
+}
+
+#movie-title-date {
+  border: inset 0.5px whitesmoke;
+  border-radius: 3%;
+  border-color: lightslategray lightslategray whitesmoke lightslategray;
+  width: -moz-available;
+  min-height: 7vh;
+  max-height: fit-content;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#movie-buttons {
+  width: -moz-available;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+
+.movie-submit {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 5px;
+}
+
+.movie-submit a {
+  background-color: darkslateblue;
+}
+
+.movie-comments {
+  display: flex;
+  justify-content: center;
+}
+
+.movie-comments a {
+  background-color: darkgoldenrod;
+}
+
+.movie-delete {
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 5px;
+}
+
+.movie-delete a {
+  background-color: darkred;
+}

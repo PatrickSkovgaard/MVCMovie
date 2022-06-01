@@ -1,0 +1,8 @@
+@model MvcMovie.Models.Movie
+
+<div>
+    @foreach (var comment in Model.Comments)
+    {
+        @Html.DisplayFor(model => model.Text)
+    }
+</div>
