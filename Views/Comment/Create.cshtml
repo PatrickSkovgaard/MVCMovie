@@ -1,40 +1,34 @@
 @model MvcMovie.Models.Comment
-
+ 
 @{
     ViewData["Title"] = "Create";
 }
-
-<h1>Create</h1>
-
-<h4>Comment</h4>
+                                
+<h4>Make a Comment for @ViewBag.movi!</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @* <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div> *@
+
+            <h5>Maximum of 60 characters!</h5>
+            <h6>Tell everyone your thoughts on the movie!</h6>
             <div class="form-group">
-                <label asp-for="Content" class="control-label"></label>
+                <label asp-for="Content" class="control-label" hidden></label>
                 <input asp-for="Content" class="form-control" />
                 <span asp-validation-for="Content" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MovieId" class="control-label"></label>
-                <select asp-for="MovieId" class ="form-control" asp-items="ViewBag.MovieId"></select>
+                <input asp-for="MovieId" class="control-label" value=@ViewBag.MovieId hidden />
             </div>
-            <div class="form-group">
+            <div class="form-group" id="create_comments_buttons">
                 <input type="submit" value="Create" class="btn btn-primary" />
+                <button id="create_comm_back_btn">
+                    <a asp-action="ShowComments" asp-controller="Movie" asp-route-id=@ViewBag.MovieId>Go Back</a>
+                </button>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

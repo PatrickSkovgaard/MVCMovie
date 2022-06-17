@@ -5,16 +5,17 @@
     <div id="search_form">
     <form asp-controller="Movie" asp-action="Index" method="get">
         <p>
-            Title: <input type="text" name="SearchString" value=@Model.SearchString></input>
+            Search for movie: <input type="text" name="SearchString" value=@Model.SearchString></input>
             <input type="submit" value="Filter" />
         </p>
     </form>
-        <a asp-action="Index">Back</a>
+        <button id="reset_btn">
+            <a asp-action="Index">Reset search</a>
+        </button>
     </div>
 
 </div>
 
- @* <a class="nav-link text-dark" asp-area="" asp-controller="Comment" asp-action="Index">cum</a> *@
 
 <div class="container_movies">
     <div class="row">
@@ -22,7 +23,9 @@
     </div>
 
     <div id="create_div">
-        <button id="btn-create" asp-action="Create">Create</button>
+        <a id="btn-create" asp-action="Create">
+            <div id="create">Add Movie</div>
+        </a>
     </div>
 
     @foreach (var movie in Model.Movies)
@@ -33,7 +36,7 @@
                 <div class="movie-created">@Html.DisplayFor(x => movie.CreatedDate)</div>
             </div>
 
-            <div class="movie-content">@Html.DisplayFor(x => movie.Text)</div>
+            <div class="movie-content">@Html.DisplayFor(x => movie.Description)</div>
             
             <div id="movie-buttons">
                 <div class="movie-submit"><a class="btn btn-secondary" asp-action="Edit" asp-route-id="@movie.Id">Edit</a></div>
@@ -42,21 +45,10 @@
                 </div>
                 <div class="movie-delete"><a class="btn btn-secondary" asp-action="Delete" asp-route-id="@movie.Id">Delete</a></div>
             </div>
+
+            <div class="movie-rating">
+                <p class="rating-p-tag">Movie Rating: @movie.Rating</p>
+            </div>
         </div>
     }
 </div>
-
-
-
-
- @*   <div class="col-6 col-md-2">Title</div>
-        <div class="d-none d-md-block col-md-6 ">Text</div>
-         <div class="col-2 col-md-1">Date</div>
-        <!--   <div class="col-2 col-md-1">Activity</div> -->
-        <div class="col-1">Status</div> *@
-
-
-@* <div class="col-2 col-md-1">@Html.DisplayFor(x => movie.CreatedDate)</div>
-        <!--    <div class="col-2 col-md-1"></div> -->
-            <div class="col-1"><span class="badge bg-dark text-dark">@Html.DisplayFor(x => movie.Status)</span></div> *@
-        

@@ -11,8 +11,8 @@ using MvcMovie.Data;
 namespace MvcMovie.Migrations
 {
     [DbContext(typeof(MvcMovieContext))]
-    [Migration("20220601161324_june1-1")]
-    partial class june11
+    [Migration("20220617144540_exam_done")]
+    partial class exam_done
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -136,29 +136,15 @@ namespace MvcMovie.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "36e9d6e7-3ae3-4845-a1af-2d890b9fe4f5",
-                            Email = "chrk@kea.dk",
+                            ConcurrencyStamp = "6722d9b7-4500-4eab-94bb-61726e4fc9a6",
+                            Email = "patricko@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAECTZxbIHcRGRK9R19vl+vGGufYy5oqGRSTI54OsaGAs/rChPcPRKpLXxhjGiWXrYOw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEK2RSiSevbHGJsmRO8h0qRMm7HuVlzI//mGvwvBm14NRmseTwaJVfu2UYqxpptGZFQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a4de288f-dce0-4416-a5cc-6fd82bd5203c",
+                            SecurityStamp = "49b50191-da45-4b40-9697-7d148aece467",
                             TwoFactorEnabled = false,
-                            UserName = "chrk@kea.dk"
-                        },
-                        new
-                        {
-                            Id = "2",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "f674793e-bca8-412d-9e81-5300c2e5c516",
-                            Email = "test@kea.dk",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEC+6BS/XKbStAlVt57eDTaxfBu9Jrr/06uPs99saOHRo9bRQvftu81x9I4ZP6vIZqQ==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "24041b3f-32d2-44d9-ad53-76885f84b6d8",
-                            TwoFactorEnabled = false,
-                            UserName = "test@kea.dk"
+                            UserName = "patricko@gmail.com"
                         });
                 });
 
@@ -277,8 +263,10 @@ namespace MvcMovie.Migrations
                         new
                         {
                             CommentId = 1,
-                            Content = "Comment 1 content",
-                            MovieId = 1
+                            Content = "I love the Superman movies so much!",
+                            MovieId = 1,
+                            TimeStamp = new DateTime(2022, 6, 17, 16, 45, 40, 205, DateTimeKind.Local).AddTicks(9558),
+                            UserId = "1"
                         });
                 });
 
@@ -291,17 +279,16 @@ namespace MvcMovie.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasMaxLength(300)
+                    b.Property<string>("Description")
+                        .HasMaxLength(150)
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(60)
+                        .HasMaxLength(40)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("UserId")
@@ -317,26 +304,11 @@ namespace MvcMovie.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2022, 6, 1, 18, 13, 23, 855, DateTimeKind.Local).AddTicks(5021),
-                            Status = 1,
-                            Text = "Movie no. 1",
-                            Title = "Movie 1"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedDate = new DateTime(2022, 6, 1, 18, 13, 23, 855, DateTimeKind.Local).AddTicks(5072),
-                            Status = 0,
-                            Text = "Movie no. 2",
-                            Title = "Movie 2"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CreatedDate = new DateTime(2022, 6, 1, 18, 13, 23, 855, DateTimeKind.Local).AddTicks(5076),
-                            Status = 1,
-                            Text = "Movie no. 3",
-                            Title = "Movie 3"
+                            CreatedDate = new DateTime(2022, 6, 17, 16, 45, 40, 205, DateTimeKind.Local).AddTicks(9491),
+                            Description = "A mighty superhero!",
+                            Rating = 0,
+                            Title = "Superman",
+                            UserId = "1"
                         });
                 });
 

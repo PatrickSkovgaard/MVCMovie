@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MvcMovie.Migrations
 {
-    public partial class june1 : Migration
+    public partial class exam_done : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -160,10 +160,10 @@ namespace MvcMovie.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Title = table.Column<string>(type: "TEXT", maxLength: 60, nullable: false),
-                    Text = table.Column<string>(type: "TEXT", maxLength: 300, nullable: false),
+                    Title = table.Column<string>(type: "TEXT", maxLength: 40, nullable: false),
+                    Description = table.Column<string>(type: "TEXT", maxLength: 150, nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Status = table.Column<int>(type: "INTEGER", nullable: false),
+                    Rating = table.Column<int>(type: "INTEGER", nullable: false),
                     UserId = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
@@ -206,32 +206,17 @@ namespace MvcMovie.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "1", 0, "b1ebef0c-d711-4e20-9acd-1b1b56d5d0f9", "chrk@kea.dk", true, false, null, null, null, "AQAAAAEAACcQAAAAEDLvwqWfAWfqeTdxL2ISJZWtqAh/jSZLlz31DZB23iC2TsEkuPZ9Gv3O/zpOBY/tUw==", null, false, "f57a0dcd-d36f-41fa-b6d1-15f5be85094e", false, "chrk@kea.dk" });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "2", 0, "fa1e81d3-bcac-4747-ae95-fa69728d0f09", "test@kea.dk", true, false, null, null, null, "AQAAAAEAACcQAAAAEO4C5jex3yBGJyRDLv5cew/wlJUdse7+Bn720uHXxYD2Vb8zh7WaQ0W1PQwSLO4X1A==", null, false, "352c6151-3e1b-4b89-bbac-e99163cfc905", false, "test@kea.dk" });
+                values: new object[] { "1", 0, "6722d9b7-4500-4eab-94bb-61726e4fc9a6", "patricko@gmail.com", true, false, null, null, null, "AQAAAAEAACcQAAAAEK2RSiSevbHGJsmRO8h0qRMm7HuVlzI//mGvwvBm14NRmseTwaJVfu2UYqxpptGZFQ==", null, false, "49b50191-da45-4b40-9697-7d148aece467", false, "patricko@gmail.com" });
 
             migrationBuilder.InsertData(
                 table: "Movie",
-                columns: new[] { "Id", "CreatedDate", "Status", "Text", "Title", "UserId" },
-                values: new object[] { 1, new DateTime(2022, 6, 1, 18, 3, 29, 616, DateTimeKind.Local).AddTicks(8976), 1, "Movie no. 1", "Movie 1", null });
-
-            migrationBuilder.InsertData(
-                table: "Movie",
-                columns: new[] { "Id", "CreatedDate", "Status", "Text", "Title", "UserId" },
-                values: new object[] { 2, new DateTime(2022, 6, 1, 18, 3, 29, 616, DateTimeKind.Local).AddTicks(9029), 0, "Movie no. 2", "Movie 2", null });
-
-            migrationBuilder.InsertData(
-                table: "Movie",
-                columns: new[] { "Id", "CreatedDate", "Status", "Text", "Title", "UserId" },
-                values: new object[] { 3, new DateTime(2022, 6, 1, 18, 3, 29, 616, DateTimeKind.Local).AddTicks(9033), 1, "Movie no. 3", "Movie 3", null });
+                columns: new[] { "Id", "CreatedDate", "Description", "Rating", "Title", "UserId" },
+                values: new object[] { 1, new DateTime(2022, 6, 17, 16, 45, 40, 205, DateTimeKind.Local).AddTicks(9491), "A mighty superhero!", 0, "Superman", "1" });
 
             migrationBuilder.InsertData(
                 table: "Comments",
                 columns: new[] { "CommentId", "Content", "MovieId", "TimeStamp", "UserId" },
-                values: new object[] { 1, "Comment 1 content", 1, null, null });
+                values: new object[] { 1, "I love the Superman movies so much!", 1, new DateTime(2022, 6, 17, 16, 45, 40, 205, DateTimeKind.Local).AddTicks(9558), "1" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -8,6 +6,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MvcMovie.Data;
 using MvcMovie.Models;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace MvcMovie.Controllers
 {
@@ -15,40 +15,24 @@ namespace MvcMovie.Controllers
     public class CommentController : Controller
     {
         private readonly MvcMovieContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public CommentController(MvcMovieContext context)
+
+        public CommentController(MvcMovieContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            this._userManager = userManager;
         }
 
-        // GET: Comment
+        
         public async Task<IActionResult> Index()
         {
             var mvcMovieContext = _context.Comments.Include(c => c.Movie);
             return View(await mvcMovieContext.ToListAsync());
         }
 
-        // GET: Comment/Details/5
-       /* public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var comment = await _context.Comments
-                .Include(c => c.Movie)
-                .FirstOrDefaultAsync(m => m.CommentId == id);
-            if (comment == null)
-            {
-                return NotFound();
-            }
-
-            return View(comment);
-        }
-*/
-
-        //Test metode, for at se om Movie title kan bruges til at komme ind på specifikke comments
+       
+/*
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Details(int? movieId)
         {
@@ -67,32 +51,58 @@ namespace MvcMovie.Controllers
 
             return View(comment);
         }
-
-        // GET: Comment/Create
-        public IActionResult Create()
+*/
+      
+        public IActionResult Create(int? id)
         {
-            ViewData["MovieId"] = new SelectList(_context.Movie, "Id", "Text");
+
+            ViewData["MovieId"] = RouteData.Values["id"].ToString();
+
+
+            var movieTitle = from m in _context.Movie select m;
+
+            ViewData["movi"] = movieTitle.Where(m => m.Id == id).Single().Title;
+            
+
             return View();
         }
 
-        // Movie: Comment/Create
-        // To protect from overMovieing attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CommentId, Title, Content, TimeStamp, MovieId")] Comment comment)
+        public async Task<IActionResult> Create([Bind("CommentId, Content, TimeStamp, MovieId, UserId")] Comment comment)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(comment);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+            comment.TimeStamp = DateTime.Now;
+
+            try{
+                IdentityUser user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+            
+                if (ModelState.IsValid){
+
+                    if(user.Id.Equals(null) || user.Id.Equals("")){
+                        user.Id = "Anonymous user";
+                    }
+                    comment.UserId = user.Id;
+                    _context.Add(comment);
+                    await _context.SaveChangesAsync();
+                    
+                    return RedirectToAction(controllerName: "Movie", 
+                    actionName: "ShowComments", 
+                    routeValues: new {id = comment.MovieId});
+                }
+
+                return View(comment);
             }
-            ViewData["MovieId"] = new SelectList(_context.Movie, "Id", "Text", comment.MovieId);
-            return View(comment);
+
+            catch(Exception e){
+                Console.WriteLine("User is undefined" + e.GetBaseException());
+                return View();
+            }
         }
 
-        // GET: Comment/Edit/5
+
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -109,9 +119,8 @@ namespace MvcMovie.Controllers
             return View(comment);
         }
 
-        // Movie: Comment/Edit/5
-        // To protect from overMovieing attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("CommentId, Title, Content, TimeStamp, MovieId")] Comment comment)
@@ -145,7 +154,7 @@ namespace MvcMovie.Controllers
             return View(comment);
         }
 
-        // GET: Comment/Delete/5
+        
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -164,7 +173,7 @@ namespace MvcMovie.Controllers
             return View(comment);
         }
 
-        // Movie: Comment/Delete/5
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -180,8 +189,10 @@ namespace MvcMovie.Controllers
             return _context.Comments.Any(e => e.CommentId == id);
         }
 
+/*
         public IActionResult CommentsFromMovie(int? id){
             return null;
         }
+*/
     }
 }

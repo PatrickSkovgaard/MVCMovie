@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<IdentityUser> SignInManager
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -29,9 +35,9 @@
                         <li>
                             <a class="nav-link text-dark" asp-area="" asp-controller="Movie" asp-action="Index">Movie</a>
                         </li>
-                        @* <li>
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Comment" asp-action="Index">Comments</a>
-                        </li> *@
+                        <div>
+                            <p></p>
+                        </div>
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>

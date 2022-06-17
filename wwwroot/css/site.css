@@ -11,6 +11,7 @@ html {
 html {
   position: relative;
   min-height: 100%;
+  scrollbar-width: thin;
 }
 
 body {
@@ -23,27 +24,58 @@ body {
   text-align: center;
 }
 
+#reset_btn{
+  margin-left: 5px;
+  border-radius: 6%;
+  border-width: 1px; 
+  height: 30px;
+  border: solid #424 0.5px;
+}
+
+#reset_btn a{
+  text-decoration: none;
+}
+
 #btn-create{
   border-radius: 5%;
   color: #fff !important;
-  background-color: #3b3;
-  margin-left: 79.8vw !important;
-  margin-top: 1px;
+  background-color: #3a3 !important;
+  margin-left: 72.6vw !important;
+  margin-top: 0.5px;
   width: 90px;
-  height: 40px;
+  height: 45px;
+  text-decoration-style: -moz-none;
+}
+
+#create{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 45px;
+  align-items: center;
+  background-color: #3c3;
+  text-decoration-style: -moz-none;
 }
 
 #create_div{
   display: flex;
   justify-content: right !important;
+  text-decoration-style: -moz-none;
+}
+
+#create:hover, #create:focus{
+  border-radius: 5%;
+  background-color: #373 !important;
+  text-decoration-style: -moz-none;
+  height: 45px;
+  border: none;
 }
 
 #btn-create:hover, #btn-create:focus{
-  background-color: #000; 
   border-radius: 5%;
-  border-style: outset;
-  font-family: 'Times New Roman', Times, serif;
-
+  border: none;
+  height: 45px;
+  text-decoration-style: -moz-none;
 } 
 
 /* Til movies container */
@@ -53,14 +85,14 @@ body {
   justify-content: center;
   align-items: center;
   border: solid;
+  max-width: 80vw;
 }
 
 
 
 .row-grid-row-movies{
   border: solid 2px orchid;
-  min-width: 35vw;
-  max-width: fit-content;
+  width: 45vw;
   min-height: 35vh;
   max-height: fit-content;
   background-color: lightslategray;
@@ -74,9 +106,10 @@ body {
 .movie-title {
   font-size: 25px;
   display: flex;
-  justify-content: flex-end; 
-  width:-moz-available;
-  margin-left: 10vw;
+  justify-content: center;
+  width: 60vw;
+  margin-left: 30%;
+  color: yellow !important;
 }
 
 .movie-created {
@@ -92,13 +125,13 @@ body {
 
 .movie-content {
   font-size: 15px;
-  border: ridge 2px lightgoldenrodyellow;
   min-width: -moz-available;
-  max-width: max-content;
   min-height: fit-content;
   max-height: max-content;
   display: flex;
   justify-content: center;
+  text-align: center;
+  margin-bottom: 10px;
 }
 
 .movie-title, .movie-content {
@@ -150,4 +183,143 @@ body {
 
 .movie-delete a {
   background-color: darkred;
+}
+
+#mov_title_h2{
+  color: #eff49c;
+}
+
+#link_to_create_comment{
+  background-color: #3355aa;
+  border-color: #113366;
+  border-radius: 5%;
+}
+
+#link_to_create_comment a{
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+#link_to_go_back_comments{
+  background-color: #888888;
+  border-radius: 5%;
+}
+
+#link_to_go_back_comments a{
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+#show_comm-comments{
+  margin-top: 10px;
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  height: 50vh;
+  width: 50vw;
+  overflow: auto;
+}
+
+#comments_page{
+  border: double 2px silver;
+  border-radius: 3%;
+  background-color: #234;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  padding: 5px;
+  overflow: auto;
+  width: 300px;
+  height: fit-content;
+  text-align: center;
+}
+
+.comm_user{
+  border: dotted 1px;
+  color:#efe;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.comm_content{
+  
+  color: #ffd;
+  margin-bottom: 10px;
+}
+
+.comm_time{
+  border: ridge 0.1px;
+  color: #fef;
+  padding: 2px;
+}
+
+#create_comments_buttons{
+  display: flex;
+  flex-direction: row;
+  margin-top: 8px;
+}
+
+#create_comm_back_btn{
+  margin-left: 10px; 
+  background-color: #9a9; 
+  border-radius: 5%; 
+  width: 75px;
+  height: 40px;
+}
+
+#create_comm_back_btn a{
+  color: #FFFFFF !important;
+  text-decoration: none;
+}
+
+/* Below is a style made by Farjana Rashid, edited by myself.*/
+/* Https://www.FarjanaRashid.com */
+
+:root{
+  --color1: #f10bda;
+  --color2: #e2d816;
+  --color3: #18e64f;
+  --size: 20px;
+}
+
+body{
+overflow-y: scroll;
+}
+
+.bubbles{
+  overflow-y: visible;
+}
+
+.bubbles span{
+  background: var(--color1);
+  width: var(--size);
+  height: var(--size);
+  display: inline-block;
+  border-radius: 50%;
+  margin: 0 5px;
+  box-shadow: none;
+  animation:animate 20s linear alternate both infinite;
+  animation-duration: calc(125s/var(--i));
+  align-items: center;
+}
+
+.bubbles span:nth-child(even){
+  background: var(--color2);
+  box-shadow: none;
+}
+
+.bubbles span:nth-child(3n){
+  background: var(--color3);
+  box-shadow: none;
+}
+
+@keyframes animate{
+  0%{
+      transform: translateY(100vh) scale(0);
+      opacity: 100%;
+  }
+  100%{
+      transform: translateY(-10vh) scale(0.5);
+      opacity: 50%;
+  }
 }

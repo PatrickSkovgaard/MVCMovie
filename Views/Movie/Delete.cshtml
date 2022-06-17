@@ -16,19 +16,13 @@
             @Html.DisplayFor(model => model.Title)
         </dd>
 
-        <dd class = "col-sm-2">
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.CreatedDate)
-        </dd>
+        </dt>
          <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.CreatedDate)
         </dd>
-        
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Status)
-        </dd>
+
     </dl>
     
     <form asp-action="Delete">

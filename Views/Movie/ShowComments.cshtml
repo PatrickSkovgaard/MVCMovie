@@ -1,8 +1,31 @@
-@model MvcMovie.Models.Movie
+@model MvcMovie.Models.Entities.CommentIndexVm
+
 
 <div>
-    @foreach (var comment in Model.Comments)
-    {
-        @Html.DisplayFor(model => model.Text)
-    }
+    <div id="mov_title_border">
+        <h2 id="mov_title_h2">@Html.DisplayFor(model => model.Movie.Title)</h2>
+    </div>
+
+
+    <button id="link_to_create_comment">
+        <a asp-action="Create" asp-controller="Comment" asp-route-id=@Model.MovieId>Create comment</a>
+        <input asp-action="Create" asp-controller="Comment" asp-route-movie=@Model.Movie.Title hidden />
+    </button>
+
+    <button id="link_to_go_back_comments">
+        <a asp-action="Index" asp-controller="Movie" asp-route-id=@Model.MovieId>Go back</a>
+    </button>
+
+    <div id="show_comm-comments">
+        @foreach (var comment in Model.Comments)
+        {
+            <div>
+                <div id="comments_page"> 
+                    <div class="comm_user"> @Html.DisplayFor(model => comment.User.Email):</div> 
+                    <div class="comm_content">'@Html.DisplayFor(model => comment.Content)'   </div>
+                    <div class="comm_time"> @Html.DisplayFor(model => comment.TimeStamp)  </div>
+                </div>
+            </div>
+        }
+    </div>
 </div>

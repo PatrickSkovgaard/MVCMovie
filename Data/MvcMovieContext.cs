@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using MvcMovie.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -37,42 +33,33 @@ namespace MvcMovie.Data
             var user1 = new IdentityUser
             {
                 Id = "1",
-                Email = "chrk@kea.dk",
+                Email = "patricko@gmail.com",
                 EmailConfirmed = true,
-                UserName = "chrk@kea.dk",
+                UserName = "patricko@gmail.com",
             };
 
-            var user2 = new IdentityUser
-            {
-                Id = "2",
-                Email = "test@kea.dk",
-                EmailConfirmed = true,
-                UserName = "test@kea.dk",
-            };
 
             PasswordHasher<IdentityUser> passHash = new PasswordHasher<IdentityUser>();
                 user1.PasswordHash = passHash.HashPassword(user1, "aA123456!");
-                user2.PasswordHash = passHash.HashPassword(user2, "aA123456!");
 
                 builder.Entity<IdentityUser>().HasData(
-                    user1, user2
+                    user1
                 );
             }
 
         private void SeedMovies(ModelBuilder builder)  
         {  
   
-                //Tilføj UserIds og lav
+
             builder.Entity<Movie>().HasData(
-                new Movie() {Id = 1, CreatedDate = DateTime.Now, Title = "Movie 1", Text = "Movie no. 1", Status = MovieStatus.PUBLISHED},
-                new Movie() {Id = 2, CreatedDate = DateTime.Now, Title = "Movie 2", Text = "Movie no. 2", Status = MovieStatus.DRAFT},
-                new Movie() {Id = 3, CreatedDate = DateTime.Now, Title = "Movie 3", Text = "Movie no. 3", Status = MovieStatus.PUBLISHED}
+                new Movie() {Id = 1, CreatedDate = DateTime.Now, Title = "Superman", Description = "A mighty superhero!", UserId = "1"}
             );  
         }
 
         private void SeedComments(ModelBuilder builder){
             builder.Entity<Comment>().HasData(
-                new Comment() {CommentId = 1, Content = "Comment 1 content", MovieId = 1}
+                new Comment() {CommentId = 1, TimeStamp = DateTime.Now,
+                 Content = "I love the Superman movies so much!", MovieId = 1, UserId = "1"}
             );
         }
     }

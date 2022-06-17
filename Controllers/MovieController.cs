@@ -21,10 +21,7 @@ public class MovieController : Controller
     }
 
     [AllowAnonymous]
-    public IActionResult Index(string SearchString = ""){
-
-        //_context takes from the database below.
-       // --> dette virker for alle movies IEnumerable<movie> movies = _context.movies.ToList();
+    public IActionResult Index(string SearchString){
 
         if(SearchString == null){
             SearchString = "";
@@ -33,23 +30,11 @@ public class MovieController : Controller
 
         var movies = from p in _context.Movie select p;
         
-        /*
-        IdentityUser user = await _userManager.FindByEmailAsync(HttpContext.User.Identity.Name);
 
+        movies = movies.Where(t => t.Title.ToLower().Contains(SearchString.ToLower()) ||
+             t.Description.ToLower().Contains(SearchString.ToLower())).Include(u => u.User);
 
-        movies = movies.Include(a => a.User).Where(u => u.User.UserName == user.UserName);
-*/
-/*
-        foreach(movie movie in movies){
-            if(!(movie.User.Equals(user))){
-                
-            }
-        }
-*/
-
-        movies = movies.Where(t => t.Title.Contains(SearchString) ||
-             t.Text.Contains(SearchString)).Include(u => u.User);
-
+        
 
         var vm = new MovieIndexVm 
         { 
@@ -65,25 +50,21 @@ public class MovieController : Controller
         return View();
     }
 
+
+
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Created", "Title", "Text", "Status")] Movie movie){
+    public async Task<IActionResult> Create([Bind("Created", "Title", "Description", "Rating")] Movie movie){
+       
+       
         movie.CreatedDate = DateTime.Now;
-
-        //Validation in the backend
+        
         if (ModelState.IsValid){    
 
             IdentityUser user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
             movie.UserId = user.Id;
 
-            if(Request.Form["saving_type"].Equals("Published")){
-                movie.Status = MovieStatus.PUBLISHED;
-            }
-            else{
-                movie.Status = MovieStatus.DRAFT;
-            }
-
-            //save to database
+            
             _context.Movie.Add(movie);
             await _context.SaveChangesAsync();
 
@@ -94,26 +75,35 @@ public class MovieController : Controller
         }
     }
 
-    public IActionResult Edit(int id){
+
+    public async Task<IActionResult> Edit(int id){
+
+
+        IdentityUser user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
 
         Movie p = _context.Movie.Include(x => x.Comments).ThenInclude(x => x.User).First(x => x.Id == id);
 
-        return View(p);
+
+        if(p.UserId.Equals(user.Id)){
+            return View(p);
+        }
+        else{
+            return Unauthorized("ERROR ! \n You are not authorized to edit this movie. Go back to the list.");
+        }
     }
 
+
     [HttpPost]
-    public IActionResult Edit(int id, [Bind("Id", "CreatedDate", "Title", "Text", "Status")] Movie movie){
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit(int id, [Bind("Id", "CreatedDate", "Title", "Description")] Movie movie){
 
         if (ModelState.IsValid)
         {
-             if(Request.Form["saving_type"].Equals("Published")){
-                movie.Status = MovieStatus.PUBLISHED;
-            }
-            else{
-                movie.Status = MovieStatus.DRAFT;
-            }
+            
+            IdentityUser user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
 
             movie.CreatedDate = DateTime.Now;
+            movie.UserId = user.Id;
             
             _context.Movie.Update(movie);
             _context.SaveChanges();
@@ -125,24 +115,11 @@ public class MovieController : Controller
 
 
 
-/*
-    public async Task<IActionResult> Details(int? id){
-
-        if(id == null){
-            return NotFound();
-        }
-
-        var movie = await _context.movies.FirstOrDefaultAsync(p => p.Id == id);
-
-        if(movie == null){
-            return NotFound();
-        } 
-
-        return View(movie);
-    }
-*/
-
     public async Task<IActionResult> Delete(int? id){
+
+
+        IdentityUser user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+
 
         if(id == null){
             return NotFound();
@@ -150,13 +127,19 @@ public class MovieController : Controller
 
         var movie = await _context.Movie
         .FirstOrDefaultAsync(p => p.Id == id);
-    
 
-    if(movie == null){
-        return NotFound();
+
+        if(movie == null){
+            return NotFound();
+            }
+
+
+        if(movie.UserId.Equals(user.Id)){
+            return View(movie);
         }
-
-        return View(movie);
+        else{
+            return Unauthorized("ERROR ! \n You are not authorized to delete this movie. Go back to the list.");
+        }
     }
 
 
@@ -171,24 +154,27 @@ public class MovieController : Controller
         return RedirectToAction(nameof(Index));
     } 
 
-
-
-
-//Test, for at se om jeg kan vise en movie's comments på en side
     
-    public  IActionResult ShowComments(int? Id, [Bind("Id", "CreatedDate", "Title", "Text", "Status")] Movie movie){
+    public async Task<IActionResult> ShowComments(int? Id){
 
         if(Id == null){
-            Console.WriteLine("ID ER " + Id);
             return NotFound();
         }
 
-        Movie movie_comments = _context.Movie.Include(c => c.Comments).First(x => x.Id == Id);
-        var pp = movie_comments.Comments;
-        // var comments = await _context.movies.FindAsync(Id);
-        
-        //await _context.SaveChangesAsync();
+        Movie movie = _context.Movie.Include(c => c.Comments).ThenInclude(u => u.User).First(mov => mov.Id == Id);
+        var comments = movie.Comments;
 
-        return null;
+        comments.Sort((a, b) => b.CommentId - a.CommentId);
+
+        IdentityUser user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+
+        var cm = new CommentIndexVm {
+            Comments = comments.ToList(),
+            MovieId = Id,
+            User = user,
+            Movie = movie           
+        };
+        
+        return View(cm);
     }
 }
